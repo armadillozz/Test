@@ -1,0 +1,61 @@
+//created on: 5 Oct 2557
+package com.sample
+
+//list any import classes here.
+
+import com.sample.Orbital
+import com.sample.Atom
+import java.util.ArrayList
+//declare any global variables here
+
+
+rule "test first Orbital"
+
+    when
+    	Atom($lv : currentElv)
+   		$o : Orbital(Elv == $lv && filled == false)
+        m : ArrayList($size :size) from collect ( Orbital() from $o)
+        e : Atom(electronLeft >= $size, $e : electronLeft)
+    then
+
+    	$o.setFilled(true);
+    	e.addOrbital($o);
+    	e.setElectronLeft($e-$size);
+    	update($o);
+    	update(e);
+   		System.out.println("after Update " + $o);
+ 	
+end
+
+rule "Your Second Rule"
+    //include attributes such as "salience" here...
+    when
+    	e : Atom($lv : currentElv, $allSize : listOfOrbital.size)
+   		$o : Orbital(Elv == $lv && filled == true)
+   		//m : ArrayList(size == 2) from collect ( Orbital() from $o)
+    then
+        //actions
+        e.setCurrentElv($lv+1);
+        update(e);
+        System.out.println("Second ");
+end
+
+rule "test 3 Orbital"
+
+    when
+    	Atom($lv : currentElv)
+   		$o : Orbital(Elv == $lv && filled == false)
+        m : ArrayList($size :size) from collect ( Orbital() from $o)
+        e : Atom(electronLeft >= $size, $e : electronLeft)
+    then
+		System.out.println($size);
+		System.out.println($lv);
+    	$o.setFilled(true);
+    	e.addOrbital($o);
+    	e.setElectronLeft($e-$size);
+    	update($o);
+    	update(e);
+   		System.out.println("after Update " + $o);
+ 	
+end
+
