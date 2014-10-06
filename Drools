@@ -39,23 +39,3 @@ rule "Your Second Rule"
         update(e);
         System.out.println("Second ");
 end
-
-rule "test 3 Orbital"
-
-    when
-    	Atom($lv : currentElv)
-   		$o : Orbital(Elv == $lv && filled == false)
-        m : ArrayList($size :size) from collect ( Orbital() from $o)
-        e : Atom(electronLeft >= $size, $e : electronLeft)
-    then
-		System.out.println($size);
-		System.out.println($lv);
-    	$o.setFilled(true);
-    	e.addOrbital($o);
-    	e.setElectronLeft($e-$size);
-    	update($o);
-    	update(e);
-   		System.out.println("after Update " + $o);
- 	
-end
-
